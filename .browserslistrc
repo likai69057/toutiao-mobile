@@ -1,3 +1,10 @@
-> 1%
-last 2 versions
-not dead
+# 这个值会被 @babel/preset-env 和 Autoprefixer 用来确定需要转译的JavaScript 特性和需要添加的 CSS 浏览器前缀。
+#由于这个项目是移动端项目 所以只针对安卓和ios系统就行了 而配置的postss.config中做了对移动端的配置 所以这里不需要这种不分移动端的配置
+# > 1%
+# last 2 versions
+# not dead
+
+# 可以将postcss.config.js的autoprefixer的移动端配置放到这里
+
+Android >= 4.0
+iOS >= 8
