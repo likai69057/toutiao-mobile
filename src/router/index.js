@@ -40,6 +40,13 @@ const routes = [
     path: '/search',
     name: 'search',
     component: () => import('@/views/search/')
+  },
+  {
+    path: '/article/:articleId',
+    name: 'article',
+    component: () => import('@/views/article/'),
+    // 将动态路由参数映射到组件的props中，无论访问还是维护性都很高
+    props: true
   }
 ]
 
