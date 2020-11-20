@@ -21,10 +21,10 @@
         class="grid-item"
         :class="{active: index === active}"
         :icon="(isEdit && index !==0) ? 'close' : ''"
-        v-for="(userChannel, index) in userChannels"
+        v-for="(channel, index) in userChannels"
         :key="index"
-        :text="userChannel.name"
-        @click="onUserChannelClick(userChannel ,index)"
+        :text="channel.name"
+        @click="onUserChannelClick(channel ,index)"
       />
     </van-grid>
     <van-cell center :border="false">
@@ -38,10 +38,10 @@
     <van-grid :gutter ="10">
       <van-grid-item
         class="grid-item"
-        v-for="(recommendChannel, index) in recommendChannels"
+        v-for="(channel, index) in recommendChannels"
         :key="index"
-        :text="recommendChannel.name"
-        @click="onAdd(recommendChannel)"
+        :text="channel.name"
+        @click="onAdd(channel)"
       />
     </van-grid>
   </div>
@@ -93,14 +93,14 @@ export default {
       const { data } = await getAllChannels()
       this.allChannels = data.data.channels
     },
-    async onAdd (recommendChannel) {
-      this.userChannels.push(recommendChannel)
+    async onAdd (channel) {
+      this.userChannels.push(channel)
       // 在编辑用户频道 要进行数据持久化处理
       if (this.user) {
         // 登录了 数据存储到线上
         await addUserChannels({
           channels: [
-            { id: recommendChannel.id, seq: this.userChannels.length }
+            { id: channel.id, seq: this.userChannels.length }
           ]
         })
       } else {
