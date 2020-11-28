@@ -46,7 +46,7 @@
       >
       </div>
 
-      <!-- 写评论的弹出层 -->
+      <!-- 评论列表 -->
       <CommentList
         :source="articleId"
       />
@@ -59,6 +59,7 @@
         <van-button
           round
           text="写评论"
+          @click="isPostShow=true"
         >
         </van-button>
       </van-tabbar-item>
@@ -91,6 +92,14 @@
         <van-icon name="share " />
       </van-tabbar-item>
     </van-tabbar>
+
+    <!-- 评论弹出层 -->
+    <van-popup
+      v-model="isPostShow"
+      position="bottom"
+    >
+      <post-comment />
+    </van-popup>>
   </div>
 </template>
 
@@ -100,17 +109,20 @@ import { getArticleInfo, deleteCollected, addCollected, deleteLike, addLike } fr
 import { ImagePreview } from 'vant'
 import { addFollow, deleteFollow } from '@/api/user.js'
 import CommentList from './components/comment-list'
+import PostComment from './components/post-comment'
 
 export default {
   name: 'index',
   components: {
-    CommentList
+    CommentList,
+    PostComment
   },
   data () {
     return {
       article: {}, // 文章数据对象
       isFollowLoading: false, // 关注用户的更新状态
-      isCollectLoading: false // 控制是否收藏
+      isCollectLoading: false, // 控制是否收藏
+      isPostShow: false // 控制评论弹出层
     }
   },
   props: {

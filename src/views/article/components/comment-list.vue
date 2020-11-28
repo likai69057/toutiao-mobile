@@ -51,7 +51,6 @@ export default {
       })
 
       const { results } = data.data
-      console.log(results)
       // 将请求的结果添加到列表中
       this.list.push(...results)
       // 请求一页完成后 关闭loading状态

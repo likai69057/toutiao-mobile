@@ -65,3 +65,22 @@ export const getComments = params => {
     params
   })
 }
+
+// 点赞评论或评论回复
+export const addCommentsLike = commentID => {
+  return request({
+    method: 'POST',
+    url: '/app/v1_0/comment/likings',
+    data: {
+      target: commentID
+    }
+  })
+}
+
+// 取消点赞评论或评论回复
+export const deleteCommentsLike = commentID => {
+  return request({
+    method: 'DELETE',
+    url: `/app/v1_0/comment/likings/${commentID}`
+  })
+}
