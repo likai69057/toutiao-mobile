@@ -30,11 +30,16 @@ export default {
     source: {
       type: [String, Number, Object],
       required: true
+    },
+    list: {
+      type: Array,
+      default: function () {
+        return []
+      }
     }
   },
   data () {
     return {
-      list: [],
       loading: false,
       finished: false,
       offset: null, // 获取下一页的页码

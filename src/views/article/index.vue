@@ -49,6 +49,7 @@
       <!-- 评论列表 -->
       <CommentList
         :source="articleId"
+        :list="commentList"
       />
     </div>
 
@@ -98,7 +99,7 @@
       v-model="isPostShow"
       position="bottom"
     >
-      <post-comment />
+      <post-comment :target="articleId" @post-success="onPostSuccess"/>
     </van-popup>>
   </div>
 </template>
@@ -122,7 +123,8 @@ export default {
       article: {}, // 文章数据对象
       isFollowLoading: false, // 关注用户的更新状态
       isCollectLoading: false, // 控制是否收藏
-      isPostShow: false // 控制评论弹出层
+      isPostShow: false, // 控制评论弹出层
+      commentList: [] // 评论列表 用于传给子组件
     }
   },
   props: {
@@ -206,6 +208,11 @@ export default {
       }
       // 弹出提示框
       this.$toast(`${this.article.attitude === 1 ? '点赞成功' : '取消点赞'}`)
+    },
+    // 评论完成后将评论内容显示在页面
+    onPostSuccess (data) {
+      this.commentList.unshift(data)
+      this.isPostShow = false
     }
   }
 }
