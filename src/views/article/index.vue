@@ -50,6 +50,7 @@
       <CommentList
         :source="articleId"
         :list="commentList"
+        @update-total-count="totalCommentCount=$event"
       />
     </div>
 
@@ -67,7 +68,7 @@
 
       <van-tabbar-item>
         <!-- 评论 -->
-        <van-icon name="comment-o" badge="123" />
+        <van-icon name="comment-o" :badge="totalCommentCount" />
       </van-tabbar-item>
 
       <van-tabbar-item>
@@ -100,7 +101,15 @@
       position="bottom"
     >
       <post-comment :target="articleId" @post-success="onPostSuccess"/>
-    </van-popup>>
+    </van-popup>
+
+    <!-- 回复弹出层 -->
+    <van-popup
+      v-model="isReplyShow"
+      position="bottom"
+    >
+      <comment-reply />
+    </van-popup>
   </div>
 </template>
 
@@ -111,12 +120,14 @@ import { ImagePreview } from 'vant'
 import { addFollow, deleteFollow } from '@/api/user.js'
 import CommentList from './components/comment-list'
 import PostComment from './components/post-comment'
+import CommentReply from './components/comment-reply'
 
 export default {
   name: 'index',
   components: {
     CommentList,
-    PostComment
+    PostComment,
+    CommentReply
   },
   data () {
     return {
@@ -124,7 +135,9 @@ export default {
       isFollowLoading: false, // 关注用户的更新状态
       isCollectLoading: false, // 控制是否收藏
       isPostShow: false, // 控制评论弹出层
-      commentList: [] // 评论列表 用于传给子组件
+      isReplyShow: false, // 控制回复弹出层
+      commentList: [], // 评论列表 用于传给子组件
+      totalCommentCount: 0 // 评论数量
     }
   },
   props: {
@@ -213,6 +226,9 @@ export default {
     onPostSuccess (data) {
       this.commentList.unshift(data)
       this.isPostShow = false
+
+      // 评论完成之后 评论计数要加1
+      this.totalCommentCount++
     }
   }
 }

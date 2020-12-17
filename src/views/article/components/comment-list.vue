@@ -55,6 +55,9 @@ export default {
         limit: this.limit // 每页大小
       })
 
+      // 获取文章的评论数量 然后发给index组件
+      this.$emit('update-total-count', data.data.total_count)
+
       const { results } = data.data
       // 将请求的结果添加到列表中
       this.list.push(...results)
