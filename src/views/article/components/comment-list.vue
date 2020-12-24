@@ -12,6 +12,7 @@
         v-for="(comment, index) in list"
         :key="index"
         :comment="comment"
+        @reply-click="$emit('reply-click', $event)"
       />
     </van-list>
   </div>
@@ -31,6 +32,10 @@ export default {
       type: [String, Number, Object],
       required: true
     },
+    type: {
+      type: String,
+      default: 'a'
+    },
     list: {
       type: Array,
       default: function () {
@@ -49,8 +54,8 @@ export default {
   methods: {
     async onLoad () {
       const { data } = await getComments({
-        type: 'a', // 评论类型 ‘a’为对文章的评论 ‘c’为对评论的回复
-        source: this.source, // 源id  即文章id或者评论id
+        type: this.type, // 评论类型 ‘a’为对文章的评论 ‘c’为对评论的回复
+        source: this.source.toString(), // 源id  即文章id或者评论id
         offset: this.offset, // 文章偏移量 即页码 值为评论id
         limit: this.limit // 每页大小
       })

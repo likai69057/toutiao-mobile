@@ -51,6 +51,7 @@
         :source="articleId"
         :list="commentList"
         @update-total-count="totalCommentCount=$event"
+        @reply-click="onReplyClick"
       />
     </div>
 
@@ -108,7 +109,13 @@
       v-model="isReplyShow"
       position="bottom"
     >
-      <comment-reply />
+      <!-- 使用v-if的目的是让每次点击不同的回复层时渲染、销毁 防止组件一直存在 覆盖新的渲染的组件 -->
+      <comment-reply
+        v-if="isReplyShow"
+        :comment="replyComment"
+        :article-id="articleId"
+        @close="isReplyShow=false"
+      />
     </van-popup>
   </div>
 </template>
@@ -137,7 +144,8 @@ export default {
       isPostShow: false, // 控制评论弹出层
       isReplyShow: false, // 控制回复弹出层
       commentList: [], // 评论列表 用于传给子组件
-      totalCommentCount: 0 // 评论数量
+      totalCommentCount: 0, // 评论数量
+      replyComment: {} // 存储当前点击回复按钮所对应的评论
     }
   },
   props: {
@@ -229,6 +237,11 @@ export default {
 
       // 评论完成之后 评论计数要加1
       this.totalCommentCount++
+    },
+    // 显示评论回复
+    onReplyClick  (comment) {
+      this.isReplyShow = true
+      this.replyComment = comment
     }
   }
 }
