@@ -19,6 +19,7 @@
           class="updata-btn"
           size="small"
           round
+          to="/user/profile"
         >编辑资料</van-button>
       </van-cell>
       <van-grid :border="false" class="data-info">

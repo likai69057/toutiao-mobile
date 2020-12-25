@@ -58,3 +58,11 @@ export const deleteFollow = userId => {
     url: `/app/v1_0/user/channels/${userId}`
   })
 }
+
+// 获取用户个人信息（生日 性别等）
+export const getUserProfile = () => {
+  return request({
+    method: 'GET',
+    url: '/app/v1_0/user/profile'
+  })
+}
