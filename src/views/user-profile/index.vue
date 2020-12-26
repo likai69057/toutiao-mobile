@@ -17,20 +17,33 @@
         :src="user.photo"
       />
     </van-cell>
-    <van-cell title="姓名" is-link :value="user.name"></van-cell>
-    <van-cell title="性别" is-link value="男"></van-cell>
-    <van-cell title="生日" is-link :value="user.birthday"></van-cell>
+    <van-cell title="昵称" is-link :value="user.name" @click="isNameShow=true" />
+    <van-cell title="性别" is-link :value="user.gender === 1 ? '女' : '男'" />
+    <van-cell title="生日" is-link :value="user.birthday" />
+
+    <!-- 昵称弹出层 -->
+    <van-popup v-model="isNameShow" position="bottom" :style="{ height: '100%' }">
+      <edit-name
+        :name="user.name"
+        @close="isNameShow=false"
+      />
+    </van-popup>
   </div>
 </template>
 
 <script>
 import { getUserProfile } from '../../api/user'
+import EditName from './components/edit-name'
 
 export default {
   name: 'UserProfile',
+  components: {
+    EditName
+  },
   data () {
     return {
-      user: {} // 用户数据
+      user: {}, // 用户数据
+      isNameShow: false // 控制修改昵称弹出层
     }
   },
   created () {
@@ -45,6 +58,8 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style scoped lang="less">
+.van-popup{
+  background-color: #f5f7f9;
+}
 </style>
