@@ -25,6 +25,7 @@
     <van-popup v-model="isNameShow" position="bottom" :style="{ height: '100%' }">
       <edit-name
         :name="user.name"
+        @update-name="user.name=$event"
         @close="isNameShow=false"
       />
     </van-popup>
