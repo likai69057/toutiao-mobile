@@ -44,7 +44,7 @@
 
     <!-- 未登录状态时 my页面 -->
     <div v-else class="not-login">
-      <div class="mobile" @click="$router.push('/login')">
+      <div class="mobile" @click="$router.push({name: 'login', query: {redirect: '/my'}})">
         <van-icon class="login-mobile" class-prefix="toutiao" name="shouji" />
       </div>
       <div class="text">登录 / 注册</div>
